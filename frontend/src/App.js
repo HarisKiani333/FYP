@@ -21,10 +21,13 @@ function App() {
 
           <div>
             {userInfo ? (
-              <Link to="#">{userInfo.name}</Link>
+              // <Link to="#">{userInfo.name}</Link>
+              <a href="#">{userInfo.name}</a>
+              
             ) : (
               <div>
-                <Link href="/signin">Sign In</Link>
+                {/* <Link href="/signin">Sign In</Link> */}
+                <a href="/signin">Sign In</a>
               </div>
             )}
 
