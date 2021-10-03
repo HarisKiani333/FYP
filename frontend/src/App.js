@@ -1,47 +1,52 @@
-
-import React from 'react';
-import { useSelector } from 'react-redux';
-import {BrowserRouter,Link,Route} from 'react-router-dom';
-import LoginScreen from './pages/LoginScreen';
-import MainScreen from './pages/MainScreen';
-import ProfileScreen from './pages/ProfileScreen';
+import React from "react";
+import { useSelector } from "react-redux";
+import { BrowserRouter, Link, Route,Switch } from "react-router-dom";
+import LoginScreen from "./pages/LoginScreen";
+import MainScreen from "./pages/MainScreen";
+import ProfileScreen from "./pages/ProfileScreen";
 
 function App() {
-const userSignin=useSelector((state)=>userSignin);
-const {userInfo}=userSignin;
-  
-return (
-  <BrowserRouter>
-<div className="grid-container">
-<header className="row">
-<div>
-<Link className="brand" to="/">Judicial Diary</Link>
-</div>
+  // let userSignin = useSelector((state) => userSignin);
+  const { userInfo } = 1;
 
-<div>{userInfo?(
-<Link to="#" >{userInfo.name}</Link>):
-(<div><Link href="/signin">Sign In</Link>
-)}</div>
+  return (
+    <BrowserRouter>
+      <div className="grid-container">
+        <header className="row">
+          <div>
+            <Link className="brand" to="/">
+              Judicial Diary
+            </Link>
+          </div>
 
+          <div>
+            {userInfo ? (
+              <Link to="#">{userInfo.name}</Link>
+            ) : (
+              <div>
+                <Link href="/signin">Sign In</Link>
+              </div>
+            )}
 
+            <a href="/booklawyer">Book Layer</a>
+          </div>
+        </header>
+        <main>
+        
+        <Switch>
+          <Route path="/" component={MainScreen} exact></Route>
+          <Route path="/signin" component={LoginScreen}></Route>
+          <Route path="/profile/:id" component={ProfileScreen}></Route>
+        </Switch>
+          
+        </main>
 
-
-
-
-<a href="/booklawyer">Book Lawyer</a></div>
-
-</header>
-<main>
-<Route path="/profile/:id"  component={ProfileScreen}></Route>
-<Route path="/signin"  component={LoginScreen}></Route>
-<Route path="/" component={MainScreen} exact></Route>
-
-
-</main>
-
-<footer className="row center">Copyright © 2018-2022 COMSATS. All Rights Reserved.</footer>
-</div>
-</BrowserRouter>
+        <footer className="row center">
+          Copyright © 2018-2022 COMSATS. All Rights Reserved.
+        </footer>
+      </div>
+      </BrowserRouter>
+    
   );
 }
 export default App;
