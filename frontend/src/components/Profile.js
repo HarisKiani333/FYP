@@ -1,24 +1,29 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import Rating from './Rating';
 
-export default function Profile(props) {
+ function Profile(props) {
 
     const { profile } = props;
+    // console.log(profile);
+    const showProfile = () =>{
+        props.history.push(`/profile/${profile._id}`);
+    }
     return (
 
-        <div key={profile._id} className="card">
-            <a href={`/profile/${profile._id}`}>
+        <div key={profile._id} className="card" onClick={showProfile}>
+            <a>
                 <img className="medium" src={profile.image} alt={profile.name} />
             </a>
 
             <div className="card-body">
-                <a href={`/profile/${profile._id}`}>
+                <a>
                     <h2>{profile.name}</h2>
 
 
                 </a>
 
-                <Rating rating={profile.rating} ratingnumbers={profile.ratingnumbers}></Rating>
+                <Rating review={profile.review} rating={profile.rating}></Rating>
 
                 <div className="Fee">
                     {"Fee Starting From  = " + profile.fee}
@@ -32,7 +37,7 @@ export default function Profile(props) {
 
 
 
-
+export default withRouter(Profile)
 
 
 

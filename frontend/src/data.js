@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 
 
 
-const data = {
+ const data = {
 
     users: [{
         name: 'Haris',
@@ -35,7 +35,7 @@ const data = {
             fee: 50000,
             casestaken: 3,
             review: 4.5,
-            ratingnumbers: 9,
+            rating: 9,
             description: 'Top Level Lawyer',
         },
         {
@@ -46,7 +46,7 @@ const data = {
             fee: 50000,
             casestaken: 3,
             review: 4.5,
-            ratingnumbers: 11,
+            rating: 11,
             description: 'Top Level Lawyer',
         },
         {
@@ -57,7 +57,7 @@ const data = {
             fee: 50000,
             casestaken: 1,
             review: 4.5,
-            ratingnumbers: 20,
+            rating: 20,
             description: 'Top Level Lawyer',
         },
         {
@@ -68,7 +68,7 @@ const data = {
             fee: 50000,
             casestaken: 2,
             review: 4.5,
-            ratingnumbers: 10,
+            rating: 10,
             description: 'Top Level Lawyer',
         },
         {
@@ -79,7 +79,7 @@ const data = {
             fee: 50000,
             casestaken: 1,
             review: 4.5,
-            ratingnumbers: 10,
+            rating: 10,
             description: 'Top Level Lawyer',
         },
         {
@@ -90,7 +90,7 @@ const data = {
             fee: 50000,
             casestaken: 1,
             review: 4.5,
-            ratingnumbers: 10,
+            rating: 10,
             description: 'Top Level Lawyer',
         },
         {
@@ -101,7 +101,7 @@ const data = {
             fee: 50000,
             casestaken: 2,
             review: 4.5,
-            ratingnumbers: 10,
+            rating: 10,
             description: 'Top Level Lawyer',
         },
         {
@@ -112,7 +112,7 @@ const data = {
             fee: 50000,
             casestaken: 3,
             review: 4.5,
-            ratingnumbers: 10,
+            rating: 10,
             description: 'Top Level Lawyer',
         },
     ],
