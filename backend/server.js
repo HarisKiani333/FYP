@@ -1,48 +1,63 @@
-import express from 'express';
-import data from './data.js'
-import mongoose from 'mongoose'; ''
-import userRouter from './Routers/userRouter.js';
-import dotenv from 'dotenv';
-dotenv.config();
+const express = require("express");
 const app = express();
+const socket = require("socket.io");
+const cors = require("cors");
+const { getCurrentUser, userDisconnect, joinUser } = require("./userFunc/userFuncs");
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express());
 
-mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    // useCreateIndex: true,
+const port = 8000;
 
-})
-app.get('/api/profile/:id', (req, res) => {
-    const profile = data.profile.find((x) => x._id === req.params.id);
-    if (profile) {
-        res.send(profile);
+app.use(cors());
 
-    } else {
-        res.status(404).send({ message: 'No Such Profile Exists' });
+let server = app.listen(
+  port,
+  console.log(
+    `Server is running on PORT: ${(port)} `
+      .green
+  )
+);
 
+const io = socket(server);
+
+io.on("connection", (socket) => {
+  socket.on("joinRoom", ({ username, roomname }) => {
+    const user = joinUser(socket.id, username, roomname);
+    console.log(socket.id, "=id",username,roomname);
+    socket.join(user.room);
+
+    socket.emit("message", {
+      userId: user.id,
+      username: user.username,
+      text: `Welcome`,
+    });
+
+    socket.broadcast.to(user.room).emit("message", {
+      userId: user.id,
+      username: user.username,
+      text: `A User has joined the chat`,
+    });
+  });
+
+  socket.on("chat", (text) => {
+    const user = getCurrentUser(socket.id);
+
+    io.to(user.room).emit("message", {
+      userId: user.id,
+      username: user.username,
+      text: text,
+    });
+  });
+
+  socket.on("disconnect", () => {
+    const user = userDisconnect(socket.id);
+
+    if (user) {
+      io.to(user.room).emit("message", {
+        userId: user.id,
+        username: user.username,
+        text: `${user.username} has left the chat`,
+      });
     }
-
-
-});
-
-app.get('/api/profile', (req, res) => {
-    res.send(data.profile);
-});
-app.get('/api/users', userRouter);
-app.get('/', (req, res) => { res.send("Server Is Ready"); });
-
-app.use((err, req, res, next) => {
-
-    res.status(500).send({ message: err.message });
-});
-
-
-//const port= process.env.PORT || 5000;
-const port = process.env.PORT || 5000;
-
-app.listen(port, () => {
-    console.log(`Server is http://localhost:${port}`);
+  });
 });
